@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace ImpinjRfidReader.CoreCLI
+namespace RfTools.CoreCLI
 {
     [Verb("info", HelpText = "获取阅读器信息")]
     public class InfoOptions

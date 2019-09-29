@@ -4,7 +4,7 @@ using System.Text;
 using Impinj.OctaneSdk;
 using System.IO;
 
-namespace ImpinjRfidReader.Core
+namespace RfTools.Core
 {
     public class RfidTool
     {

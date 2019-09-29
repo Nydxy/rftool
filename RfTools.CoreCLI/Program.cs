@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CommandLine;
-using ImpinjRfidReader.Core;
+using RfTools.Core;
 
-namespace ImpinjRfidReader.CoreCLI
+namespace RfTools.CoreCLI
 {
     partial class Program
     {

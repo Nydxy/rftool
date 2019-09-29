@@ -1,7 +1,7 @@
 ﻿using System;
 using Impinj.OctaneSdk;
 
-namespace ImpinjRfidReader.Core
+namespace RfTools.Core
 {
     public class RfidOptions
     {

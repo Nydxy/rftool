@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netstandard20;net461</TargetFrameworks>
+    <Authors>Libcat</Authors>
+    <Company>Dislab. NJU. Nanjing</Company>
   </PropertyGroup>
 
   <ItemGroup>

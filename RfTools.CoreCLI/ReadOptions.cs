@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using Impinj.OctaneSdk;
 
-namespace ImpinjRfidReader.Core
+namespace RfTools.CoreCLI
 {
     [Verb("read", HelpText = "开始阅读标签")]
     public class ReadOptions
