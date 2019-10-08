@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CommandLine;
 using RfTools.Core;
+using System.Threading;
 
 namespace RfTools.CoreCLI
 {
@@ -47,6 +48,9 @@ namespace RfTools.CoreCLI
             return RfidTool.GetReaderInfo(options.HostName);
         }
 
-
+        static void fuck()
+        {
+            RfidTool.Read(wait_for_stop: () => Thread.Sleep(1000),reader_address:"192.168.100.169");
+        }
     }
 }
