@@ -8,14 +8,23 @@ namespace RfTools.Core
     public class RfidTool
     {
         #region 属性和成员
-        // Create an instance of the ImpinjReader class.
+        /// <summary>
+        /// 阅读器对象
+        /// </summary>
         private ImpinjReader reader;
+        /// <summary>
+        /// 设置参数
+        /// </summary>
         public RfidOptions option;
-
+        /// <summary>
+        /// 是否连接上
+        /// </summary>
+        public bool IsConnected => reader.IsConnected;
         /// <summary>
         /// 要保存的文件
         /// </summary>
         private StreamWriter file;
+        
 
         public bool IsReading { get; private set; }
 
@@ -31,6 +40,13 @@ namespace RfTools.Core
         public event ImpinjReader.TagsReportedHandler TagsReported;
 
         #endregion
+
+        public RfidTool()
+        {
+            reader = new ImpinjReader();
+            option = new RfidOptions();
+            RedirectStandardOut += Console.WriteLine;
+        }
 
         /// <summary>
         /// 带参构造函数
@@ -88,7 +104,7 @@ namespace RfTools.Core
                 }
 
                 //包含天线号码
-                settings.Report.IncludeAntennaPortNumber = true;
+                settings.Report.IncludeAntennaPortNumber = option.ReportAntennaPortNumber;
                 //报告信号强度
                 settings.Report.IncludePeakRssi = option.ReportRssi;
                 //报告相位
@@ -357,7 +373,7 @@ namespace RfTools.Core
         /// 获得阅读器信息
         /// </summary>
         /// <returns></returns>
-        public bool GetReaderInfo()
+        public RfidReaderInfo GetReaderInfo()
         {
             try
             {
@@ -369,21 +385,29 @@ namespace RfTools.Core
                     RedirectStandardOut.Invoke("");
                 }
 
+                RfidReaderInfo result = new RfidReaderInfo();
+
                 // Query the reader features and print the results.
                 RedirectStandardOut.Invoke("Reader Features");
                 RedirectStandardOut.Invoke("---------------");
                 FeatureSet features = reader.QueryFeatureSet();
                 RedirectStandardOut.Invoke($"Model name : {features.ModelName}");
+                result.ModelName = features.ModelName;
                 RedirectStandardOut.Invoke($"Model number : {features.ModelNumber}");
+                result.ModelNumber = features.ModelNumber.ToString();
                 RedirectStandardOut.Invoke($"Reader model : {features.ReaderModel.ToString()}");
+                result.ReaderModel = features.ReaderModel.ToString();
                 RedirectStandardOut.Invoke($"Firmware version : {features.FirmwareVersion}");
+                result.FirmwareVersion = features.FirmwareVersion;
                 RedirectStandardOut.Invoke($"Antenna count : {features.AntennaCount}\n");
+                result.AntennaCount = features.AntennaCount;
 
                 // Query the current reader status.
                 RedirectStandardOut.Invoke("Reader Status");
                 RedirectStandardOut.Invoke("---------------");
                 Status status = reader.QueryStatus();
                 RedirectStandardOut.Invoke($"Is connected : {status.IsConnected}");
+                result.IsConnected = status.IsConnected;
                 RedirectStandardOut.Invoke($"Is singulating : {status.IsSingulating}");
                 RedirectStandardOut.Invoke($"Temperature : {status.TemperatureInCelsius}° C\n");
 
@@ -421,19 +445,19 @@ namespace RfTools.Core
                     RedirectStandardOut.Invoke("");
                 }
 
-                return true;
+                return result;
             }
             catch (OctaneSdkException e)
             {
                 // Handle Octane SDK errors.
                 RedirectStandardOut.Invoke($"Octane SDK exception: {e.Message}");
-                return false;
+                return null;
             }
             catch (Exception e)
             {
                 // Handle other .NET errors.
                 RedirectStandardOut.Invoke($"Exception : {e.Message}");
-                return false;
+                return null;
             }
         }
 

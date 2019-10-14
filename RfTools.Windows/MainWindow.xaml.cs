@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RfTools.Core;
 
 namespace RfTools.Windows
 {
@@ -23,6 +24,19 @@ namespace RfTools.Windows
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+            
+        }
+
+        #region 设置
+        public RfidTool Rfid { get; set; } = new RfidTool();
+        public RfidOptions RfidOption { get; set; } = new RfidOptions();
+        public string IsConnectedStr => Rfid.IsConnected ? "已连接" : "未连接";
+        #endregion
+
+        private void Button_Start_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

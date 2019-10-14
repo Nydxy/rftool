@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Impinj.OctaneSdk;
 
 namespace RfTools.Core
@@ -54,6 +55,8 @@ namespace RfTools.Core
         /// 是否报告天线号码
         /// </summary>
         public bool ReportAntennaPortNumber { get; set; } = true;
+
+        public Array ReaderModes=> System.Enum.GetValues(typeof(ReaderMode));
     }
 
 }
